@@ -1,0 +1,11 @@
+# Secrets
+.env
+
+# Data (raw layer is append-only and lives outside git; versioning via DVC later)
+data/
+
+# Python environment and caches
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/

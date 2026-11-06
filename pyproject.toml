@@ -1,0 +1,30 @@
+[project]
+name = "mlops-tcc"
+version = "0.1.0"
+description = "MLOps for port congestion forecasting and monitoring with streaming AIS data (TCC, UFSCar)."
+requires-python = ">=3.12"
+dependencies = [
+    "websockets>=14",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

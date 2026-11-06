@@ -1,0 +1,32 @@
+services:
+  collector:
+    build: .
+    image: mlops-tcc/collector:dev
+    restart: unless-stopped
+    # API key is injected at runtime only; never baked into the image.
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+    stop_grace_period: 30s   # lets the collector finalize the current raw part on SIGTERM
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    healthcheck:
+      # Healthy while new frames keep arriving (heartbeat is touched only on writes).
+      # Note: plain Compose does not restart unhealthy containers; the collector's own
+      # idle timeout handles stalled streams. This is a visibility signal.
+      test:
+        - CMD
+        - python
+        - -c
+        - "import os,sys,time; p='data/ops/heartbeat'; sys.exit(0 if os.path.exists(p) and time.time()-os.path.getmtime(p) < 300 else 1)"
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "5"

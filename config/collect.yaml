@@ -1,0 +1,33 @@
+# Collector and coverage configuration (Phase 0).
+# Coordinates follow the AISStream convention: corners as [latitude, longitude].
+
+collection:
+  # Whole Brazilian coast (decision P-09: collect broadly, model 3 ports).
+  # Rough box; also includes land and open ocean, which costs nothing but disk.
+  bounding_boxes:
+    - [[-34.0, -54.0], [5.5, -28.0]]
+  data_dir: data
+  flush_interval_s: 10      # flush raw file + heartbeat at most every N seconds
+  idle_timeout_s: 120       # reconnect if no frame arrives for N seconds
+  backoff_initial_s: 1
+  backoff_max_s: 300
+  stable_after_s: 60        # a connection this long resets the backoff
+
+# Target ports for modelling (decision P-11: Santos, Paranagua, Itajai).
+# COARSE boxes drafted by Claude to include port + anchorage areas.
+# NOT VALIDATED: must be reviewed visually with Luiz before Phase 2.
+ports:
+  santos:
+    name: Santos
+    bbox: [[-24.35, -46.55], [-23.85, -46.05]]
+  paranagua:
+    name: Paranagua
+    bbox: [[-25.75, -48.65], [-25.40, -48.05]]
+  itajai:
+    name: Itajai
+    bbox: [[-27.05, -48.75], [-26.80, -48.45]]
+
+# Go/no-go thresholds for gate G0 (proposal P-02, heuristic, adjustable).
+coverage_criteria:
+  min_cargo_tanker_mmsi: 30            # distinct MMSIs with AIS ship type 70-89
+  max_median_report_interval_min: 10   # median gap between position reports per vessel
