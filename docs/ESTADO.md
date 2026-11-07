@@ -10,6 +10,7 @@
 
 - Coletor rodando no Lightsail desde **07/11/2026 00:01 UTC** (compressão confirmada, container `healthy`).
 - **G0 (19 h de dados):** Santos e Rio passam nos dois critérios; Paranaguá, Itajaí e Espírito Santo reprovam. Portos-alvo redefinidos na P-14.
+- **Caixas de Santos e Rio validadas visualmente** pelo Luiz em 07/11: todos os navios fundeados, atracados e parados caem dentro delas.
 - Servidor: Ubuntu 24.04, 1 GB de RAM com 1 GB de swap, 40 GB de disco, us-east-2, firewall só SSH/22, SSH só por chave, atualizações automáticas, UTC.
 - Conta AWS exclusiva (plano gratuito, US$ 100, até 06/05/2027), com 2FA e orçamento zero-spend.
 - Documentação: `DECISOES.md` (P-05 a P-14), `JORNADA.md` e `ESTADO.md`.
@@ -20,7 +21,7 @@
 
 ## Próximos passos
 
-1. **Validar visualmente as bboxes de Santos e Rio** com o Luiz (pré-requisito das geofences da Fase 2).
+1. ✅ ~~Validar visualmente as bboxes de Santos e Rio~~: aprovadas em 07/11 (ver JORNADA). Na Fase 2, desenhar os polígonos de fundeio e de cais dentro delas.
 2. Resto da Fase 0:
    - `CLAUDE.md` e `docs/LICENCAS.md`;
    - pre-commit com varredura de segredos;

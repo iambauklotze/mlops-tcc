@@ -15,8 +15,9 @@ collection:
 
 # Target ports for modelling (decision P-14, after gate G0: Santos and Rio de Janeiro).
 # Paranagua and Itajai were dropped (P-11 -> P-14) for lack of AIS coverage.
-# COARSE boxes drafted by Claude to include port + anchorage areas.
-# NOT VALIDATED: must be reviewed visually with Luiz before Phase 2.
+# Outer region boxes (port + anchorage). VALIDATED visually by Luiz on 2026-11-07
+# against 19 h of real AIS positions: all anchored/moored/stopped vessels fall inside.
+# They are intentionally loose; Phase 2 draws the anchorage and berth polygons inside them.
 ports:
   santos:
     name: Santos

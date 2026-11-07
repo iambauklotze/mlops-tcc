@@ -145,6 +145,29 @@ Diário cronológico da construção do projeto, feito para **estudo** e para a 
 - Coletar amplo e decidir com dados: a troca de porto custou minutos de análise, não dias de coleta.
 - Toda métrica operacional precisa ser conferida contra o evento bruto. O "0.0 min" parecia ótimo e estava errado.
 
+### Continuação em 07/11: validação visual das caixas (Santos e Rio)
+
+**O que aconteceu**
+- Foi gerado um mapa interativo (página privada no claude.ai) com as posições reais de 07/11, 00:01–19:02 UTC, amostradas em 1 ponto por navio a cada 5 min (cerca de 6.900 pontos em Santos e 8.200 no Rio). Os pontos são coloridos por status AIS (fundeado, atracado, parado, em movimento), sobre as caixas do `config/collect.yaml`.
+- **O Luiz aprovou as duas caixas como estão.**
+
+**Evidências** (navios distintos, área exportada = caixa + ~0,1°)
+
+| | Santos | Rio |
+|---|---|---|
+| Fundeados dentro / só fora | 56 / 0 | 73 / 0 |
+| Atracados dentro / só fora | 62 / 0 | 53 / 0 |
+| Parados (outro status) dentro / só fora | 54 / 0 | 67 / 0 |
+| Extensão dos fundeados | 24°14′S–23°57′S, 46°22′W–46°08′W | toda dentro da Baía de Guanabara |
+
+**Dificuldades e limitações**
+- A página publicada não pode carregar mapas de fundo externos. A forma da água foi "desenhada" pelos próprios navios, com um link para o OpenStreetMap para comparar com a costa.
+- A exportação só olhou ~11 km além das caixas; fundeios mais distantes não teriam aparecido (*não verificado além dessa margem*).
+- As caixas são largas de propósito (incluem marinas, estaleiros, base naval, praias). A distinção fina (polígonos de fundeio e de cais) fica para a Fase 2.
+
+**Lição**
+- A validação foi feita com o comportamento real dos navios, e não só com a carta náutica: o dado mostra onde os navios efetivamente fundeiam. **[BANCA]**
+
 ### Material para a banca (rascunho)
 
 - A narrativa "**dataset autoral nasce em 07/11/2026**", com a justificativa: a fonte não tem histórico, então a coleta foi priorizada.
