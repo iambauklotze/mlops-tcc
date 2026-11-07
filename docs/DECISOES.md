@@ -43,6 +43,29 @@ Formato: data · ID · status. Contexto, decisão e consequências. Decisões s�
 **Alternativas descartadas.** EC2 com SSM (mais complexa), Hetzner (sem ganho de portfólio), notebook (risco de lacunas), Oracle Free (risco de a instância ser recuperada).
 **Consequências.** O custo é coberto pelos créditos (preço do plano não verificado). O disco de 40 GB pode ser insuficiente para a costa inteira, e o volume precisa ser medido. Se a conta não migrar para o plano pago até 06/05/2027, ela é apagada 90 dias depois (risco para a Release 2). Reversível: copiar os dados e apagar a instância e o IP estático.
 
+## 2026-11-07 · P-14 · Aprovada · Portos-alvo pós-G0: Santos e Rio de Janeiro (substitui P-11)
+
+**Contexto.** Gate G0 com 19 h de coleta (07/11, 00:01–18:59 UTC), medido sobre a coleta nacional (P-09) com bboxes aproximadas:
+
+| Região | MMSI | Carga/tanque | Intervalo mediano | G0 |
+|---|---|---|---|---|
+| Santos | 143 | 106 | 9,0 min | PASS/PASS |
+| Rio de Janeiro (Guanabara + entrada) | 157 | 51 | 9,0 min | PASS/PASS |
+| Itajaí | 11 | 7 | 9,0 min | FAIL/PASS |
+| Paranaguá | 0 | 0 | n/a | FAIL/FAIL |
+| Vitória/Vila Velha + Tubarão/Praia Mole | 5 | 3 | 12,0 min | FAIL/FAIL |
+| Itaguaí/Sepetiba (referência) | 0 | 0 | n/a | FAIL/FAIL |
+
+**Decisão.** Os portos-alvo da modelagem passam a ser **Santos e Rio de Janeiro**. Saem Paranaguá e Itajaí. O Espírito Santo foi avaliado a pedido do Luiz e descartado pela cobertura. A coleta continua nacional, e o coletor não foi reiniciado.
+**Alternativas descartadas.** Manter Itajaí como porto de baixa cobertura (poucas atracações para treinar); Espírito Santo (sem cobertura); Plano B de outra região ou domínio (desnecessário, porque 2 portos passaram).
+**Consequências.** A comparação por porto fica mais estreita, mas os perfis são distintos (Santos: porto público de contêiner e granel; Rio: baía urbana com mais embarcações de apoio). A bbox do Rio é aproximada e precisa de validação visual antes da Fase 2. A cobertura gratuita do AISStream no Brasil se concentra no Sudeste, o que é um achado em si.
+
+## 2026-11-07 · P-13 · Aprovada · Documentação da jornada do projeto
+
+**Contexto.** O Luiz quer estudar o projeto depois e gerar uma apresentação profissional para a banca, destacando decisões, dificuldades, gargalos e restrições.
+**Decisão.** Criar `docs/JORNADA.md` (diário cronológico por sessão, com a etiqueta [BANCA] e só fatos verificados) e `docs/ESTADO.md` (foto atual, para retomar o trabalho). `docs/DECISOES.md` continua sendo o registro formal.
+**Consequências.** Cerca de 15 minutos por sessão para manter. A apresentação da banca será gerada a partir dessa base, na Fase 5.
+
 ## 2026-11-06 · Desvio do PE-0a · Aprovado · Dependência `pyyaml`
 
 **Contexto.** `config/collect.yaml` exige um parser YAML, não previsto no PE-0a.

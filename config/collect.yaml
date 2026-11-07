@@ -13,19 +13,17 @@ collection:
   backoff_max_s: 300
   stable_after_s: 60        # a connection this long resets the backoff
 
-# Target ports for modelling (decision P-11: Santos, Paranagua, Itajai).
+# Target ports for modelling (decision P-14, after gate G0: Santos and Rio de Janeiro).
+# Paranagua and Itajai were dropped (P-11 -> P-14) for lack of AIS coverage.
 # COARSE boxes drafted by Claude to include port + anchorage areas.
 # NOT VALIDATED: must be reviewed visually with Luiz before Phase 2.
 ports:
   santos:
     name: Santos
     bbox: [[-24.35, -46.55], [-23.85, -46.05]]
-  paranagua:
-    name: Paranagua
-    bbox: [[-25.75, -48.65], [-25.40, -48.05]]
-  itajai:
-    name: Itajai
-    bbox: [[-27.05, -48.75], [-26.80, -48.45]]
+  rio:
+    name: Rio de Janeiro
+    bbox: [[-23.10, -43.35], [-22.70, -43.00]]   # Guanabara Bay + entrance anchorage
 
 # Go/no-go thresholds for gate G0 (proposal P-02, heuristic, adjustable).
 coverage_criteria:
