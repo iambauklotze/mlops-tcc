@@ -121,3 +121,23 @@ O histórico inteiro (3 commits) foi varrido antes do primeiro push: nenhum vaza
 
 **Alternativas descartadas.** Fila em t+h como alvo principal (vira o Plano B); rótulo da ANTAQ (atraso de semanas ou meses); reprevisão a cada hora; modelos de sobrevivência (extensão).
 **Consequências.** Define as semanas 2 a 4. A stack (tracking, serving, orquestração) e a RAM do servidor ficam para propostas próprias. Os limiares são heurísticos até o G1. Reversível por nova proposta; o Plano B é a saída prevista.
+
+## 2026-11-08 · PE-2 · Aprovado · Semana 2: camada tratada, polígonos, episódios e G1
+
+**Decisão.** Branch `feat/phase2-episodes`. A semana tem 7 passos:
+1. cópia só de leitura dos dados do servidor;
+2. camada tratada em Parquet;
+3. polígonos candidatos tirados dos dados;
+4. validação dos polígonos pelo Luiz;
+5. extrator de esperas;
+6. relatório do G1;
+7. execução do G1 em 14/11.
+
+**Consequências.** A correção da medição de lacunas do coletor fica fora do PE-2, porque o deploy exige reiniciar o coletor, o que precisa de confirmação separada.
+
+## 2026-11-08 · P-19 · Aprovada · polars e shapely na camada de dados
+
+**Contexto.** A camada tratada precisa caber no servidor de 1 GB, e o geofencing precisa de teste ponto-em-polígono confiável.
+**Decisão.** `polars` para tabelas e Parquet; `shapely` para polígonos. As licenças (MIT, BSD-3) estão em `LICENCAS.md`.
+**Alternativas descartadas.** pandas (mais memória); DuckDB (mais uma linguagem, SQL); ray-casting escrito à mão.
+**Consequências.** Medido: a normalização de 1,7 dia leva cerca de 5 s, com 127 MB de pico. Reversível com `uv remove` e reescrita do `normalize.py`.

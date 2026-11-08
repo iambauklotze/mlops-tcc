@@ -19,6 +19,8 @@ Diário cronológico da construção do projeto, feito para **estudo** e para a 
 | 06/11 | Conta AWS exclusiva do TCC e servidor Lightsail configurado |
 | **07/11 00:01** | **Início da coleta contínua de AIS** (marco zero do dataset autoral) |
 | 07/11 ~19:00 | **Gate G0**: Santos e Rio passam; Paranaguá, Itajaí e Espírito Santo reprovam; portos-alvo trocados sem perder coleta (P-14) |
+| 08/11 | Fase 0 fechada (repositório, CI verde); desenho do modelo aprovado (P-18) |
+| 08/11 | Semana 2: camada tratada, polígonos candidatos e extrator de episódios; achado da recepção fraca no fundeio de Santos |
 
 ---
 
@@ -206,7 +208,40 @@ Diário cronológico da construção do projeto, feito para **estudo** e para a 
 - O **gate G1** com Plano B automático transforma o maior risco (volume de rótulos, ainda não medido) em uma decisão com critério definido antes de ver os dados.
 - Matriz de cobertura do currículo: supervisionado (espera), não supervisionado (anomalias), ciclo de vida (retreino e promoção), DevOps, Containers, Serving e Cloud.
 
+---
 
+## Sessão 3 · 08/11/2026 · Semana 2 (PE-2): camada tratada, polígonos, episódios
+
+### O que foi feito
+- **PE-2 e P-19 aprovados.** Branch `feat/phase2-episodes`.
+- **Cópia dos dados** do servidor por rsync, só leitura, ignorando arquivos ainda abertos. Resultado: 42 partes, todas conferidas pelo sha256, 8 MB.
+- **Camada tratada** (`ingest/normalize.py`): o JSONL bruto vira Parquet diário de posições e de dados estáticos.
+  - Volume: 69 mil posições em 1,7 dia.
+  - Desempenho: cerca de 5 s e 127 MB de pico de memória, compatível com o servidor de 1 GB.
+  - O teste agora usa o formato real das mensagens (metadados em minúsculas).
+- **Polígonos candidatos** (`features/geofences.py`): desenhados a partir de onde navios de carga e tanque realmente param, usando o status AIS de cada um (1 = fundeado, 5 = atracado).
+  - **Primeira tentativa falhou:** com grade de 400 m, o fundeio de Santos virou ilhas de 3 navios, porque navios fundeados ficam a centenas de metros uns dos outros.
+  - **Correção:** grade própria para cada tipo, 1,5 km no fundeio e 400 m no cais.
+  - Resultado em Santos: 1 fundeio com 53 navios e 7 trechos de cais. No Rio: 1 fundeio com 32 navios e 8 trechos de cais.
+- **Extrator de episódios** (`features/episodes.py`): implementa a seção 2 da P-18, com 12 testes em trajetórias **sintéticas**.
+- **Relatório do G1** (`scripts/g1_report.py`).
+
+### Achado importante [BANCA]: a recepção de AIS no fundeio de Santos é fraca
+- Uma rodada **preliminar** do G1 usou 1,7 dia de dados e polígonos **ainda não validados**. Ela mostrou que só **12 de 55** fundeios em Santos tiveram a chegada observada (no Rio, 18 de 41).
+- **Causa, medida:**
+  - No fundeio de Santos, o intervalo mediano entre mensagens é de **18 min** (P90 de 153 min), com 37 silêncios acima de 6 h.
+  - Nos cais de Santos, o intervalo mediano é de 7 min.
+  - O fundeio fica ao largo, longe das antenas terrestres que alimentam o AISStream.
+- **Consequência:** muitos navios "aparecem" já fundeados, sem que se saiba quando chegaram. Usar o primeiro ponto como início do fundeio **subestimaria a espera** em silêncio. O extrator ganhou a marca `arrival_observed`, e esses episódios ficam fora do treino e são contados à parte (proposta P-20).
+- **Lição:** a cobertura do G0 era medida na caixa do porto inteira. Ela escondia que a qualidade varia **dentro** do porto, justamente na zona onde o rótulo começa.
+
+### Limitações desta rodada
+- Com só 1,7 dia, as esperas longas ainda não terminaram. A projeção por esperas completas fica enviesada para baixo; o G1 oficial usa 7 dias.
+- Os números acima **não são o G1** e não disparam nenhuma decisão.
+
+---
+
+## Material para a banca
 
 - A narrativa "**dataset autoral nasce em 07/11/2026**", com a justificativa: a fonte não tem histórico, então a coleta foi priorizada.
 - A decisão "coletar amplo, modelar estreito" como gestão de risco, comprovada no G0: Paranaguá e Itajaí substituídos pelo Rio sem perder coleta.

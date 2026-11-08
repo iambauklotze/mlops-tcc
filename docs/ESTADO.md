@@ -2,8 +2,8 @@
 
 > Arquivo vivo: atualizado ao fim de cada sessão. Histórico completo em [JORNADA.md](JORNADA.md); decisões em [DECISOES.md](DECISOES.md).
 
-**Última atualização:** 08/11/2026 (Fase 0 fechada: repositório no GitHub, CI verde)
-**Fase atual:** **Fase 0 concluída.** Gate G0 aprovado com 2 portos (Santos e Rio de Janeiro); coleta contínua em andamento.
+**Última atualização:** 08/11/2026 (semana 2 em andamento: PE-2)
+**Fase atual:** **Semana 2 (PE-2)**, na branch `feat/phase2-episodes`. Os polígonos aguardam validação do Luiz, e o G1 está marcado para 14/11.
 **Prazo:** entrega em 05/12/2026.
 
 ## Feito e verificado
@@ -18,9 +18,19 @@
 - Repositório **privado** [iambauklotze/mlops-tcc](https://github.com/iambauklotze/mlops-tcc), com a branch `feat/minimal-collector` (padrão por enquanto; `main` ainda não existe).
 - **CI verde** em 08/11 (execução 42430671392): pre-commit + testes, gitleaks no histórico completo (8 commits, sem vazamentos) e build da imagem.
 
+- **Semana 2 (08/11):**
+  - `scripts/sync_data.sh`: cópia só de leitura do servidor, com conferência de sha256;
+  - camada tratada em Parquet (`ingest/normalize.py`);
+  - polígonos candidatos (`features/geofences.py`, `scripts/draft_geofences.py`);
+  - extrator de esperas (`features/episodes.py`);
+  - relatório do G1 (`scripts/g1_report.py`);
+  - 29 testes offline passando, todos com dados sintéticos.
+
 ## Em andamento
 
 - Coleta contínua da costa brasileira inteira, com a modelagem focada em Santos e Rio.
+- **Polígonos candidatos aguardando validação** no mapa (página privada). Depois de aprovados, eles serão congelados em `config/geofences.yaml`.
+- **P-20 aguardando aprovação:** exigir a chegada observada para o rótulo contar.
 
 ## Próximos passos
 
@@ -28,12 +38,13 @@
 2. ✅ ~~Resto da Fase 0~~ (PE-1), concluído em 08/11. Falta convidar o Aliclei (precisa do usuário GitHub dele).
 3. ✅ ~~Desenho do modelo~~: **P-18 aprovada** em 08/11 ([MODELO.md](MODELO.md)).
 4. **Semana 2 (até 14/11):**
-   - desenhar os polígonos de fundeio e de cais;
-   - extrator de episódios (fundeio → atracação);
-   - **gate G1** com a contagem de esperas completas por porto.
+   - ✅ polígonos candidatos; falta a validação do Luiz;
+   - ✅ extrator de episódios;
+   - ✅ relatório do G1;
+   - falta: congelar os polígonos e rodar o **G1 oficial em 14/11** com 7 dias de dados (`scripts/sync_data.sh`, `python -m ingest.normalize`, `python -m scripts.g1_report`).
 5. Fase 1 (em paralelo, o essencial antes do G1):
    - **corrigir a medição de lacunas** (incluir o silêncio antes do timeout, registrando o horário do último frame);
-   - corrigir o teste com o formato real das mensagens (`latitude`, `longitude`, `time_utc` em minúsculas);
+   - ✅ ~~corrigir o teste com o formato real das mensagens~~ (feito em 08/11);
    - validação de esquema e dead-letter;
    - métricas de ingestão;
    - cópia periódica dos dados para o notebook;
@@ -51,6 +62,8 @@
 - Onde está o `ais_coverage_test.py` original. O deck está em `Downloads/TCC – MLOps para congestionamento portuário (AIS).pdf`.
 
 ## Riscos abertos
+
+- **Recepção fraca de AIS no fundeio de Santos (novo, 08/11):** intervalo mediano de 18 min e 37 silêncios acima de 6 h, contra 7 min nos cais. Na rodada preliminar, só 12 de 55 fundeios tiveram a chegada observada. O teto projetado por chegadas foi de **144**, abaixo dos 150 da tabela do G1. Ainda **não verifiquei** com 7 dias de dados.
 
 - **Apenas 2 portos:** comparação por porto mais estreita. Se um deles perder cobertura, sobra um só.
 - **Lacunas subestimadas no relatório** até a correção da Fase 1. Houve 1 silêncio real de pelo menos 2 min em 19 h.
