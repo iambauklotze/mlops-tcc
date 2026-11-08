@@ -91,8 +91,9 @@ def parse_position(msg: dict[str, Any]) -> Position | None:
     meta = msg.get("MetaData") or {}
     body = (msg.get("Message") or {}).get("PositionReport") or {}
     mmsi = meta.get("MMSI", body.get("UserID"))
-    lat = body.get("Latitude", meta.get("Latitude"))
-    lon = body.get("Longitude", meta.get("Longitude"))
+    # Real frames use lowercase MetaData keys (the docs show capitalized ones).
+    lat = body.get("Latitude", meta.get("latitude"))
+    lon = body.get("Longitude", meta.get("longitude"))
     if (
         not isinstance(mmsi, int)
         or not isinstance(lat, int | float)

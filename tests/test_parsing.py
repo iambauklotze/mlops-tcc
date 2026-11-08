@@ -26,14 +26,17 @@ from scripts.coverage_report import (
     parse_ship_type,
 )
 
-# Shape taken from the AISStream documentation examples (synthetic values).
+# Shape of real AISStream frames as received in production (synthetic values):
+# MetaData keys are lowercase (latitude, longitude, time_utc), unlike the docs.
 POSITION_FRAME = {
     "MessageType": "PositionReport",
     "MetaData": {
         "MMSI": 710000001,
-        "ShipName": "TEST VESSEL",
-        "Latitude": -24.0,
-        "Longitude": -46.3,
+        "MMSI_String": 710000001,
+        "ShipName": "TEST VESSEL         ",
+        "latitude": -24.0,
+        "longitude": -46.3,
+        "time_utc": "2026-11-07 00:01:12.602437867 +0000 UTC",
     },
     "Message": {
         "PositionReport": {
@@ -48,8 +51,20 @@ POSITION_FRAME = {
 }
 STATIC_FRAME = {
     "MessageType": "ShipStaticData",
-    "MetaData": {"MMSI": 710000001},
-    "Message": {"ShipStaticData": {"UserID": 710000001, "Type": 70, "Name": "TEST VESSEL"}},
+    "MetaData": {
+        "MMSI": 710000001,
+        "time_utc": "2026-11-07 00:01:12.077504626 +0000 UTC",
+    },
+    "Message": {
+        "ShipStaticData": {
+            "UserID": 710000001,
+            "Type": 70,
+            "Name": "TEST VESSEL         ",
+            "Destination": "SANTOS              ",
+            "Dimension": {"A": 150, "B": 30, "C": 15, "D": 15},
+            "ImoNumber": 9000001,
+        }
+    },
 }
 
 REPO = Path(__file__).resolve().parents[1]
