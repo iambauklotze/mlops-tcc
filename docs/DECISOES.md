@@ -71,3 +71,36 @@ Formato: data · ID · status. Contexto, decisão e consequências. Decisões s�
 **Contexto.** `config/collect.yaml` exige um parser YAML, não previsto no PE-0a.
 **Decisão.** Adicionar `pyyaml` (escolha do Luiz entre pyyaml e TOML).
 **Consequências.** Uma dependência a mais, pequena e madura.
+
+## 2026-11-07 · P-15 · Aprovada (PE-1) · pre-commit com gitleaks e ruff
+
+**Contexto.** O repositório vai para o GitHub, e a chave do AISStream existe no `.env` local. Um vazamento é um incidente.
+**Decisão.** Adotar `pre-commit` (dependência de dev, 4.7.0) com:
+- gitleaks v8.30.0;
+- pre-commit-hooks v6.0.0 (arquivos grandes, chave privada, YAML/TOML, fim de linha);
+- ruff local via `uv run`, para usar a mesma versão do `uv.lock`.
+
+O histórico inteiro (3 commits) foi varrido antes do primeiro push: nenhum vazamento.
+**Alternativa descartada.** detect-secrets (mais falsos positivos e exige arquivo de baseline).
+**Consequências.** O primeiro commit numa máquina nova baixa o gitleaks (pre-commit compila com Go). A varredura da pasta acusa o `.env`, como esperado, porque ele contém a chave e é ignorado pelo Git. Reversível: apagar `.pre-commit-config.yaml` e remover a dependência.
+
+## 2026-11-07 · P-16 · Aprovada (PE-1) · CI no GitHub Actions
+
+**Decisão.** O workflow `ci` roda a cada push e PR, em três jobs:
+- pre-commit em todos os arquivos + pytest;
+- gitleaks sobre o histórico completo (`gitleaks-action@v2`);
+- `docker build` da imagem do coletor.
+
+**Alternativa descartada.** Sem CI (perde a evidência automática de qualidade para a banca).
+**Consequências.** Os minutos de CI de repositório privado são limitados no plano gratuito (*cota não verificada*). **O CI ainda não rodou nenhuma vez**, porque o repositório remoto ainda não existe.
+
+## 2026-11-07 · P-17 · Aprovada (PE-1) · Repositório privado, licença MIT e dados brutos fora do Git
+
+**Contexto.** O AISStream não publica termos de uso (ver `docs/LICENCAS.md`).
+**Decisão.**
+- Repositório GitHub **privado** até a defesa, com o Aliclei como colaborador. A abertura ao público é decisão posterior.
+- Código sob **MIT**.
+- Dados AIS brutos **nunca** no Git nem publicados; só código e agregados.
+- `main` só recebe merge quando o Luiz pedir.
+
+**Consequências.** A banca verá o código por convite ou depois da publicação.

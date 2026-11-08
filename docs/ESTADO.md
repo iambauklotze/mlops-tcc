@@ -2,8 +2,8 @@
 
 > Arquivo vivo: atualizado ao fim de cada sessão. Histórico completo em [JORNADA.md](JORNADA.md); decisões em [DECISOES.md](DECISOES.md).
 
-**Última atualização:** 07/11/2026 (gate G0)
-**Fase atual:** Fase 0 concluindo. **Gate G0 aprovado com 2 portos (Santos e Rio de Janeiro)**; coleta contínua em andamento.
+**Última atualização:** 07/11/2026 (fechamento da Fase 0, PE-1)
+**Fase atual:** Fase 0 concluída localmente; **falta só criar o repositório GitHub e fazer o push**. Gate G0 aprovado com 2 portos (Santos e Rio de Janeiro); coleta contínua em andamento.
 **Prazo:** entrega em 05/12/2026.
 
 ## Feito e verificado
@@ -13,7 +13,9 @@
 - **Caixas de Santos e Rio validadas visualmente** pelo Luiz em 07/11: todos os navios fundeados, atracados e parados caem dentro delas.
 - Servidor: Ubuntu 24.04, 1 GB de RAM com 1 GB de swap, 40 GB de disco, us-east-2, firewall só SSH/22, SSH só por chave, atualizações automáticas, UTC.
 - Conta AWS exclusiva (plano gratuito, US$ 100, até 06/05/2027), com 2FA e orçamento zero-spend.
-- Documentação: `DECISOES.md` (P-05 a P-14), `JORNADA.md` e `ESTADO.md`.
+- Documentação: `DECISOES.md` (P-05 a P-17), `JORNADA.md`, `ESTADO.md`, `LICENCAS.md`, `README.md`, `CLAUDE.md`, `LICENSE` (MIT).
+- pre-commit com gitleaks e ruff; histórico varrido, sem vazamentos (P-15).
+- Workflow de CI escrito (P-16), **ainda não executado** (falta o repositório remoto).
 
 ## Em andamento
 
@@ -22,13 +24,9 @@
 ## Próximos passos
 
 1. ✅ ~~Validar visualmente as bboxes de Santos e Rio~~: aprovadas em 07/11 (ver JORNADA). Na Fase 2, desenhar os polígonos de fundeio e de cais dentro delas.
-2. Resto da Fase 0:
-   - `CLAUDE.md` e `docs/LICENCAS.md`;
-   - pre-commit com varredura de segredos;
-   - CI;
-   - README;
-   - repositório no GitHub.
-3. Fase 1:
+2. ✅ ~~Resto da Fase 0~~ (PE-1), exceto **repositório GitHub privado + push da branch**: bloqueado porque o `gh` não está instalado e a chave SSH do WSL não está no GitHub. Depois do push, conferir a primeira execução do CI.
+3. **Decidir o desenho do modelo** (proposta P-18, com base na revisão de 07/11): alvo principal = espera de cada navio na chegada ao fundeio, saída em quantis, dois baselines, gate G1 em 14/11 com plano B de previsão da fila.
+4. Fase 1:
    - **corrigir a medição de lacunas** (incluir o silêncio antes do timeout, registrando o horário do último frame);
    - corrigir o teste com o formato real das mensagens (`latitude`, `longitude`, `time_utc` em minúsculas);
    - validação de esquema e dead-letter;
@@ -37,6 +35,7 @@
 
 ## Pendências de aprovação
 
+- **P-18** desenho do modelo (a escrever; substitui a P-01 e responde o "momento da previsão") ·
 - **P-01** rótulo de espera derivado do AIS · **P-02** critério de cobertura e Plano B (aplicado de fato no G0; falta a aprovação formal) · **P-03** replay com drift simulado · **P-04** TCC antes da plataforma.
 
 ## Perguntas em aberto (para o Luiz)

@@ -168,6 +168,21 @@ Diário cronológico da construção do projeto, feito para **estudo** e para a 
 **Lição**
 - A validação foi feita com o comportamento real dos navios, e não só com a carta náutica: o dado mostra onde os navios efetivamente fundeiam. **[BANCA]**
 
+### Continuação em 07/11: fechamento da Fase 0 (PE-1)
+
+**O que foi feito**
+- **pre-commit** com gitleaks, ruff e hooks de higiene (P-15). A varredura do **histórico completo** antes do primeiro push não encontrou vazamentos. A varredura da pasta acusou só o `.env`, que é ignorado pelo Git (comportamento esperado).
+- **CI** no GitHub Actions (P-16): lint, testes, segredos no histórico e build da imagem. *Ainda não executado*, porque falta o repositório remoto.
+- **README**, **CLAUDE.md**, licença **MIT** e **docs/LICENCAS.md** (P-17).
+- Todas as dependências têm licença permissiva (MIT, BSD, Apache, PSF).
+
+**Achado importante [BANCA]**
+- **O AISStream não publica termos de uso.** Não há regra sobre armazenar, usar em pesquisa, redistribuir ou atribuir. Daí a postura conservadora: dado bruto privado, publicação só de agregados, e consulta ao provedor antes de qualquer dataset derivado.
+- A documentação avisa que conexões **sem compressão** têm limite de banda desde setembro de 2026. A escolha de ativar compressão no coletor (Fase 0) evitou esse problema.
+
+**Bloqueio**
+- O repositório GitHub ainda não foi criado. O `gh` não está instalado no WSL, e a chave SSH do WSL não está cadastrada no GitHub (`Permission denied (publickey)`). Esse passo depende do Luiz.
+
 ### Material para a banca (rascunho)
 
 - A narrativa "**dataset autoral nasce em 07/11/2026**", com a justificativa: a fonte não tem histórico, então a coleta foi priorizada.
@@ -175,3 +190,4 @@ Diário cronológico da construção do projeto, feito para **estudo** e para a 
 - A divergência entre a documentação e o dado real como caso concreto de API instável e de validação de esquema na entrada.
 - A arquitetura de coleta: container não-root, bruto imutável com checksum, lacunas medidas e nunca escondidas.
 - O processo de decisão rastreável: propostas e ADRs, com aprovação explícita.
+- Segurança como gate: varredura de segredos no commit e no CI, e uma fonte de dados sem termos de uso tratada com postura conservadora.
