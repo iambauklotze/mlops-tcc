@@ -44,6 +44,9 @@ As licenças foram lidas dos metadados dos pacotes instalados pelo `uv.lock` em 
 | websockets | 17.4 | BSD-3-Clause | runtime |
 | python-dotenv | 1.2.4 | BSD-3-Clause | runtime |
 | PyYAML | 6.0.3 | MIT | runtime |
+| polars (+ polars-runtime-32) | 2.1.0 | MIT | runtime: camada tratada (P-19) |
+| shapely | 2.2.0 | BSD-3-Clause | runtime: geofencing (P-19) |
+| numpy (transitiva do shapely) | 2.5.4 | BSD-3-Clause, com partes 0BSD, MIT, Zlib e CC0-1.0 | runtime |
 | pytest | 9.2.0 | MIT | dev |
 | ruff | 0.17.4 | MIT | dev |
 | pre-commit | 4.7.0 | MIT | dev |
