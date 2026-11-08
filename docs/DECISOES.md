@@ -104,3 +104,20 @@ O histórico inteiro (3 commits) foi varrido antes do primeiro push: nenhum vaza
 - `main` só recebe merge quando o Luiz pedir.
 
 **Consequências.** A banca verá o código por convite ou depois da publicação.
+
+## 2026-11-08 · P-18 · Aprovada · Desenho do modelo: espera de cada navio na chegada ao fundeio (substitui P-01)
+
+**Contexto.** A P-01 (rótulo de espera derivado do AIS) não definia o momento da previsão, a saída, os baselines nem o critério de sucesso. Revisão feita em 07/11 com o deck do TCC e a página oficial do MBA.
+**Decisão.** A especificação completa está em [`MODELO.md`](MODELO.md). Em resumo:
+- **alvo:** espera fundeio → atracação, derivada do AIS, prevista quando o fundeio é confirmado;
+- **saída:** P10/P50/P90 em horas;
+- **personas:** principal = planejador (previsão); secundária = agente marítimo (anomalias);
+- **baselines:** B0 histórico e B1 de fila;
+- **avaliação:** walk-forward semanal; campeão = menor MAE do P50 com cobertura do P90 ≥ 85%;
+- **monitoramento:** 4 camadas, incluindo o desempenho real com rótulo atrasado;
+- **retreino:** semanal ou por gatilho;
+- **anomalias:** z-score robusto, com Isolation Forest como comparação;
+- **gate G1** em 14/11, com Plano B (fila em t+12 h).
+
+**Alternativas descartadas.** Fila em t+h como alvo principal (vira o Plano B); rótulo da ANTAQ (atraso de semanas ou meses); reprevisão a cada hora; modelos de sobrevivência (extensão).
+**Consequências.** Define as semanas 2 a 4. A stack (tracking, serving, orquestração) e a RAM do servidor ficam para propostas próprias. Os limiares são heurísticos até o G1. Reversível por nova proposta; o Plano B é a saída prevista.

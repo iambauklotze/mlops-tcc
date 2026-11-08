@@ -94,7 +94,7 @@ Diário cronológico da construção do projeto, feito para **estudo** e para a 
 | Disco de 40 GB insuficiente | 688 KB em 3,6 h (cerca de 5 MB/dia pela extrapolação). **Risco praticamente descartado** |
 | Quedas do AISStream | Reconexão automática; lacunas registradas em `data/ops/connection_events.jsonl` |
 | Fim do plano gratuito da AWS (06/05/2027) | Sem migração, a conta é apagada 90 dias depois (afeta a Release 2) |
-| Rótulo de espera (P-01) | Desenho proposto, ainda sem aprovação |
+| Rótulo de espera (P-01) | Desenho proposto, ainda sem aprovação (substituído pela P-18 em 08/11) |
 
 ### Lições aprendidas
 
@@ -193,7 +193,20 @@ Diário cronológico da construção do projeto, feito para **estudo** e para a 
 - Um CI "verde" só vale se o passo realmente executou: a action falhou *e* reportou "no leaks found in partial scan". Ler o log, e não só o ícone, revelou que nada tinha sido varrido.
 
 
-### Material para a banca (rascunho)
+### Continuação em 08/11: desenho do modelo (P-18)
+
+**O que aconteceu**
+- O Luiz pediu uma revisão aprofundada antes de decidir. A base foi o deck do TCC e a página oficial do MBA (iti.ufscar.mba/mlp), que define o TCC como "Projeto de Engenharia de ML" com aplicação real, avaliado por banca de mercado e academia. **A rubrica de avaliação não é pública.**
+- Três alvos comparados: espera de cada navio, fila do porto e rótulo da ANTAQ. **Escolhido: espera de cada navio**, prevista na confirmação do fundeio, em quantis.
+- **Personas:** o Luiz perguntou se o produto pode servir a dois públicos. Decisão: sim, com o **planejador como principal** e o **agente marítimo como secundário**. O principal desempata as decisões; daí o critério de campeão "menor MAE do P50 com cobertura do P90 ≥ 85%", porque subestimar a espera é o erro mais caro para o planejador.
+
+**Decisões-chave [BANCA]**
+- O rótulo derivado do AIS amadurece em **horas ou dias**, dentro da janela do TCC. Isso torna o monitoramento com rótulo atrasado **demonstrável de verdade**; a ANTAQ (semanas ou meses de atraso) fica como validação externa.
+- **Dois baselines**, um estatístico e um de teoria de filas, e um compromisso explícito: não vencer os baselines é resultado, não fracasso.
+- O **gate G1** com Plano B automático transforma o maior risco (volume de rótulos, ainda não medido) em uma decisão com critério definido antes de ver os dados.
+- Matriz de cobertura do currículo: supervisionado (espera), não supervisionado (anomalias), ciclo de vida (retreino e promoção), DevOps, Containers, Serving e Cloud.
+
+
 
 - A narrativa "**dataset autoral nasce em 07/11/2026**", com a justificativa: a fonte não tem histórico, então a coleta foi priorizada.
 - A decisão "coletar amplo, modelar estreito" como gestão de risco, comprovada no G0: Paranaguá e Itajaí substituídos pelo Rio sem perder coleta.

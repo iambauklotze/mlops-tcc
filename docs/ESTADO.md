@@ -26,8 +26,12 @@
 
 1. ✅ ~~Validar visualmente as bboxes de Santos e Rio~~: aprovadas em 07/11 (ver JORNADA). Na Fase 2, desenhar os polígonos de fundeio e de cais dentro delas.
 2. ✅ ~~Resto da Fase 0~~ (PE-1), concluído em 08/11. Falta convidar o Aliclei (precisa do usuário GitHub dele).
-3. **Decidir o desenho do modelo** (proposta P-18, com base na revisão de 07/11): alvo principal = espera de cada navio na chegada ao fundeio, saída em quantis, dois baselines, gate G1 em 14/11 com plano B de previsão da fila.
-4. Fase 1:
+3. ✅ ~~Desenho do modelo~~: **P-18 aprovada** em 08/11 ([MODELO.md](MODELO.md)).
+4. **Semana 2 (até 14/11):**
+   - desenhar os polígonos de fundeio e de cais;
+   - extrator de episódios (fundeio → atracação);
+   - **gate G1** com a contagem de esperas completas por porto.
+5. Fase 1 (em paralelo, o essencial antes do G1):
    - **corrigir a medição de lacunas** (incluir o silêncio antes do timeout, registrando o horário do último frame);
    - corrigir o teste com o formato real das mensagens (`latitude`, `longitude`, `time_utc` em minúsculas);
    - validação de esquema e dead-letter;
@@ -37,15 +41,13 @@
 
 ## Pendências de aprovação
 
-- **P-18** desenho do modelo (a escrever; substitui a P-01 e responde o "momento da previsão") ·
-- **P-01** rótulo de espera derivado do AIS · **P-02** critério de cobertura e Plano B (aplicado de fato no G0; falta a aprovação formal) · **P-03** replay com drift simulado · **P-04** TCC antes da plataforma.
+- ~~P-01~~ substituída pela P-18 (aprovada) · **P-02** critério de cobertura e Plano B (aplicado de fato no G0; falta a aprovação formal) · **P-03** replay com drift simulado · **P-04** TCC antes da plataforma.
 
 ## Perguntas em aberto (para o Luiz)
 
 - **Q4:** o que exatamente é entregue em 05/12 e como a banca avalia.
 - Divisão de tarefas com o Aliclei.
 - Nível em cada ferramenta (para calibrar o modo mentor).
-- Momento da previsão: na chegada ao fundeio, atualizada a cada hora, ou antes da chegada.
 - Onde está o `ais_coverage_test.py` original. O deck está em `Downloads/TCC – MLOps para congestionamento portuário (AIS).pdf`.
 
 ## Riscos abertos
