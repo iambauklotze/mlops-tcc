@@ -239,6 +239,11 @@ Diário cronológico da construção do projeto, feito para **estudo** e para a 
 - Com só 1,7 dia, as esperas longas ainda não terminaram. A projeção por esperas completas fica enviesada para baixo; o G1 oficial usa 7 dias.
 - Os números acima **não são o G1** e não disparam nenhuma decisão.
 
+### Decisões de 08/11
+- O Luiz **validou os polígonos** no mapa, e eles foram congelados em `config/geofences.yaml`. Rodar o G1 com o arquivo congelado reproduz os números da rodada com os candidatos.
+- **P-20 aprovada:** espera só vira rótulo quando a chegada ao fundeio foi observada.
+- [BANCA] O polígono é tratado como parte da definição do rótulo: ele fica versionado, é validado por um humano e só muda por proposta.
+
 ---
 
 ## Material para a banca

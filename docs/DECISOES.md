@@ -141,3 +141,22 @@ O histórico inteiro (3 commits) foi varrido antes do primeiro push: nenhum vaza
 **Decisão.** `polars` para tabelas e Parquet; `shapely` para polígonos. As licenças (MIT, BSD-3) estão em `LICENCAS.md`.
 **Alternativas descartadas.** pandas (mais memória); DuckDB (mais uma linguagem, SQL); ray-casting escrito à mão.
 **Consequências.** Medido: a normalização de 1,7 dia leva cerca de 5 s, com 127 MB de pico. Reversível com `uv remove` e reescrita do `normalize.py`.
+
+## 2026-11-08 · PE-2 passo 4 · Aprovado · Polígonos de fundeio e cais congelados
+
+**Contexto.** Os polígonos candidatos foram gerados a partir de onde navios de carga e tanque realmente param, usando 07/11 00:01 a 08/11 17:59 UTC de dados. Eles foram mostrados ao Luiz num mapa com as posições reais.
+**Decisão.** Os polígonos foram congelados em `config/geofences.yaml`:
+- Santos: 2 de fundeio e 7 de cais;
+- Rio: 1 de fundeio e 8 de cais.
+
+**Consequências.** Esses polígonos definem os rótulos. Qualquer mudança neles exige nova proposta, e os rótulos precisam ser recalculados.
+
+## 2026-11-08 · P-20 · Aprovada · Espera só conta com a chegada ao fundeio observada
+
+**Contexto.**
+- Na rodada preliminar do G1, a recepção de AIS no fundeio de Santos se mostrou fraca: intervalo mediano de 18 min e 37 silêncios acima de 6 h, contra 7 min nos cais.
+- Por isso, muitos navios aparecem já fundeados, e o início real da espera fica desconhecido.
+
+**Decisão.** Um episódio só vira rótulo útil se `arrival_observed` for verdadeiro: o ponto anterior ao fundeio está em movimento ou fora do fundeio, e no máximo 6 h antes. Os demais episódios continuam no relatório, contados à parte.
+**Alternativa descartada.** Usar o primeiro ponto ouvido como início do fundeio. Daria mais rótulos, mas subestimaria a espera sem aviso, e esse é o erro mais caro para o planejador.
+**Consequências.** Menos rótulos, principalmente em Santos. O teto preliminar por chegadas ficou em 144, abaixo dos 150 da tabela do G1. Reversível com uma linha em `scripts/g1_report.py`.

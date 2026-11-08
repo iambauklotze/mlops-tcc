@@ -3,7 +3,7 @@
 > Arquivo vivo: atualizado ao fim de cada sessão. Histórico completo em [JORNADA.md](JORNADA.md); decisões em [DECISOES.md](DECISOES.md).
 
 **Última atualização:** 08/11/2026 (semana 2 em andamento: PE-2)
-**Fase atual:** **Semana 2 (PE-2)**, na branch `feat/phase2-episodes`. Os polígonos aguardam validação do Luiz, e o G1 está marcado para 14/11.
+**Fase atual:** **Semana 2 (PE-2)**, na branch `feat/phase2-episodes`. Os polígonos foram validados e a P-20 aprovada; o G1 oficial está marcado para 14/11.
 **Prazo:** entrega em 05/12/2026.
 
 ## Feito e verificado
@@ -29,8 +29,8 @@
 ## Em andamento
 
 - Coleta contínua da costa brasileira inteira, com a modelagem focada em Santos e Rio.
-- **Polígonos candidatos aguardando validação** no mapa (página privada). Depois de aprovados, eles serão congelados em `config/geofences.yaml`.
-- **P-20 aguardando aprovação:** exigir a chegada observada para o rótulo contar.
+- **Polígonos validados pelo Luiz e congelados** em `config/geofences.yaml` (08/11).
+- **P-20 aprovada:** o rótulo só conta quando a chegada ao fundeio foi observada.
 
 ## Próximos passos
 
@@ -38,10 +38,10 @@
 2. ✅ ~~Resto da Fase 0~~ (PE-1), concluído em 08/11. Falta convidar o Aliclei (precisa do usuário GitHub dele).
 3. ✅ ~~Desenho do modelo~~: **P-18 aprovada** em 08/11 ([MODELO.md](MODELO.md)).
 4. **Semana 2 (até 14/11):**
-   - ✅ polígonos candidatos; falta a validação do Luiz;
+   - ✅ polígonos validados e congelados;
    - ✅ extrator de episódios;
    - ✅ relatório do G1;
-   - falta: congelar os polígonos e rodar o **G1 oficial em 14/11** com 7 dias de dados (`scripts/sync_data.sh`, `python -m ingest.normalize`, `python -m scripts.g1_report`).
+   - falta: rodar o **G1 oficial em 14/11** com 7 dias de dados (`scripts/sync_data.sh`, `python -m ingest.normalize`, `python -m scripts.g1_report`).
 5. Fase 1 (em paralelo, o essencial antes do G1):
    - **corrigir a medição de lacunas** (incluir o silêncio antes do timeout, registrando o horário do último frame);
    - ✅ ~~corrigir o teste com o formato real das mensagens~~ (feito em 08/11);
