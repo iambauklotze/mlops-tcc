@@ -180,8 +180,18 @@ Diário cronológico da construção do projeto, feito para **estudo** e para a 
 - **O AISStream não publica termos de uso.** Não há regra sobre armazenar, usar em pesquisa, redistribuir ou atribuir. Daí a postura conservadora: dado bruto privado, publicação só de agregados, e consulta ao provedor antes de qualquer dataset derivado.
 - A documentação avisa que conexões **sem compressão** têm limite de banda desde setembro de 2026. A escolha de ativar compressão no coletor (Fase 0) evitou esse problema.
 
-**Bloqueio**
-- O repositório GitHub ainda não foi criado. O `gh` não está instalado no WSL, e a chave SSH do WSL não está cadastrada no GitHub (`Permission denied (publickey)`). Esse passo depende do Luiz.
+**Repositório e primeiro CI (08/11)**
+- **Bloqueios em sequência, todos resolvidos:**
+  1. O `gh` não estava instalado.
+  2. O `apt` estava travado por um `dpkg` interrompido antes (resolvido com `sudo dpkg --configure -a`).
+  3. O navegador não abre a partir do WSL (o login foi por código no navegador do Windows).
+  4. A chave SSH tem passphrase, então o agente não consegue usá-la sem interação. O push passou a usar HTTPS com o token do `gh`, configurado só neste repositório.
+  5. O token não tinha a permissão `workflow`, que o GitHub exige para enviar `.github/workflows/` (resolvido com `gh auth refresh -s workflow`).
+- **Primeiro CI vermelho:** lint, testes e build passaram, mas o job de segredos falhou. A `gitleaks-action` tenta varrer a partir do pai do commit raiz numa branch nova, e esse commit não existe, então ela varreu 0 bytes. Ela foi trocada pela imagem oficial do gitleaks, testada localmente antes do push. **Segundo CI: verde nos 3 jobs**, com 8 commits varridos e nenhum vazamento.
+
+**Lição [BANCA]**
+- Um CI "verde" só vale se o passo realmente executou: a action falhou *e* reportou "no leaks found in partial scan". Ler o log, e não só o ícone, revelou que nada tinha sido varrido.
+
 
 ### Material para a banca (rascunho)
 
@@ -191,3 +201,4 @@ Diário cronológico da construção do projeto, feito para **estudo** e para a 
 - A arquitetura de coleta: container não-root, bruto imutável com checksum, lacunas medidas e nunca escondidas.
 - O processo de decisão rastreável: propostas e ADRs, com aprovação explícita.
 - Segurança como gate: varredura de segredos no commit e no CI, e uma fonte de dados sem termos de uso tratada com postura conservadora.
+- O CI que falhou "em silêncio" (varredura parcial de 0 bytes) como exemplo de verificar a evidência e não só o status.

@@ -2,8 +2,8 @@
 
 > Arquivo vivo: atualizado ao fim de cada sessão. Histórico completo em [JORNADA.md](JORNADA.md); decisões em [DECISOES.md](DECISOES.md).
 
-**Última atualização:** 07/11/2026 (fechamento da Fase 0, PE-1)
-**Fase atual:** Fase 0 concluída localmente; **falta só criar o repositório GitHub e fazer o push**. Gate G0 aprovado com 2 portos (Santos e Rio de Janeiro); coleta contínua em andamento.
+**Última atualização:** 08/11/2026 (Fase 0 fechada: repositório no GitHub, CI verde)
+**Fase atual:** **Fase 0 concluída.** Gate G0 aprovado com 2 portos (Santos e Rio de Janeiro); coleta contínua em andamento.
 **Prazo:** entrega em 05/12/2026.
 
 ## Feito e verificado
@@ -15,7 +15,8 @@
 - Conta AWS exclusiva (plano gratuito, US$ 100, até 06/05/2027), com 2FA e orçamento zero-spend.
 - Documentação: `DECISOES.md` (P-05 a P-17), `JORNADA.md`, `ESTADO.md`, `LICENCAS.md`, `README.md`, `CLAUDE.md`, `LICENSE` (MIT).
 - pre-commit com gitleaks e ruff; histórico varrido, sem vazamentos (P-15).
-- Workflow de CI escrito (P-16), **ainda não executado** (falta o repositório remoto).
+- Repositório **privado** [iambauklotze/mlops-tcc](https://github.com/iambauklotze/mlops-tcc), com a branch `feat/minimal-collector` (padrão por enquanto; `main` ainda não existe).
+- **CI verde** em 08/11 (execução 42430671392): pre-commit + testes, gitleaks no histórico completo (8 commits, sem vazamentos) e build da imagem.
 
 ## Em andamento
 
@@ -24,14 +25,15 @@
 ## Próximos passos
 
 1. ✅ ~~Validar visualmente as bboxes de Santos e Rio~~: aprovadas em 07/11 (ver JORNADA). Na Fase 2, desenhar os polígonos de fundeio e de cais dentro delas.
-2. ✅ ~~Resto da Fase 0~~ (PE-1), exceto **repositório GitHub privado + push da branch**: bloqueado porque o `gh` não está instalado e a chave SSH do WSL não está no GitHub. Depois do push, conferir a primeira execução do CI.
+2. ✅ ~~Resto da Fase 0~~ (PE-1), concluído em 08/11. Falta convidar o Aliclei (precisa do usuário GitHub dele).
 3. **Decidir o desenho do modelo** (proposta P-18, com base na revisão de 07/11): alvo principal = espera de cada navio na chegada ao fundeio, saída em quantis, dois baselines, gate G1 em 14/11 com plano B de previsão da fila.
 4. Fase 1:
    - **corrigir a medição de lacunas** (incluir o silêncio antes do timeout, registrando o horário do último frame);
    - corrigir o teste com o formato real das mensagens (`latitude`, `longitude`, `time_utc` em minúsculas);
    - validação de esquema e dead-letter;
    - métricas de ingestão;
-   - cópia periódica dos dados para o notebook.
+   - cópia periódica dos dados para o notebook;
+   - atualizar actions do CI para versões em Node.js 24 (`checkout`, `setup-uv`) e fixar a imagem do runner antes da migração do `ubuntu-latest` para Ubuntu 26.
 
 ## Pendências de aprovação
 

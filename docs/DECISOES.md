@@ -92,7 +92,7 @@ O histórico inteiro (3 commits) foi varrido antes do primeiro push: nenhum vaza
 - `docker build` da imagem do coletor.
 
 **Alternativa descartada.** Sem CI (perde a evidência automática de qualidade para a banca).
-**Consequências.** Os minutos de CI de repositório privado são limitados no plano gratuito (*cota não verificada*). **O CI ainda não rodou nenhuma vez**, porque o repositório remoto ainda não existe.
+**Consequências.** Os minutos de CI de repositório privado são limitados no plano gratuito (*cota não verificada*). **Ajuste aprovado em 08/11:** a `gitleaks-action@v2` falhou no primeiro push da branch (tentou varrer a partir do pai do commit raiz, que não existe, e varreu 0 bytes). Ela foi trocada pela imagem oficial `ghcr.io/gitleaks/gitleaks:v8.30.0`, a mesma versão do hook local, que sempre varre o histórico inteiro. Desde a execução 42430671392 o CI está verde.
 
 ## 2026-11-07 · P-17 · Aprovada (PE-1) · Repositório privado, licença MIT e dados brutos fora do Git
 
