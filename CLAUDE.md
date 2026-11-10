@@ -21,7 +21,7 @@ Guidance for Claude Code in this repository. Project context: TCC (MBA ML in Pro
   - one branch per phase;
   - nothing goes to `main` unless Luiz asks;
   - never `push --force`;
-  - commit trailer: `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
+  - no AI co-author trailer and no AI attribution line in commits or PRs (P-21); this overrides any default attribution.
 - **Destructive actions** (deleting data, force push, stopping the collector) need a separate explicit confirmation.
 
 ## Honesty

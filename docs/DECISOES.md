@@ -160,3 +160,10 @@ O histórico inteiro (3 commits) foi varrido antes do primeiro push: nenhum vaza
 **Decisão.** Um episódio só vira rótulo útil se `arrival_observed` for verdadeiro: o ponto anterior ao fundeio está em movimento ou fora do fundeio, e no máximo 6 h antes. Os demais episódios continuam no relatório, contados à parte.
 **Alternativa descartada.** Usar o primeiro ponto ouvido como início do fundeio. Daria mais rótulos, mas subestimaria a espera sem aviso, e esse é o erro mais caro para o planejador.
 **Consequências.** Menos rótulos, principalmente em Santos. O teto preliminar por chegadas ficou em 144, abaixo dos 150 da tabela do G1. Reversível com uma linha em `scripts/g1_report.py`.
+
+## 2026-11-10 · P-21 · Aprovada (opção A) · Commits sem coautoria do Claude
+
+**Contexto.** A linha `Co-Authored-By` fazia o GitHub mostrar o avatar do Claude como coautor dos commits.
+**Decisão.** A partir de 10/11, commits e PRs saem sem a linha de coautoria e sem linha de atribuição à IA (regra no `CLAUDE.md`). O histórico já publicado não é reescrito.
+**Alternativa descartada (por ora).** Opção B: reescrever o histórico e fazer `push --force`. Ela contraria a regra de nunca usar force push e mudaria todos os hashes. Pode ser reavaliada enquanto ninguém mais tiver clonado o repositório.
+**Consequências.** O ícone sai dos commits novos e da página inicial, mas continua nos 18 commits anteriores. O uso de IA continua registrado no `JORNADA.md`, e a declaração no texto do TCC segue as regras do MBA.
